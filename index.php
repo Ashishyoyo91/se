@@ -252,10 +252,12 @@ $conn = new mysqli("localhost", "root", "", "test");
             
             <button type="submit" class="btn btn-primary">View Payslip</button>
         </form>
-        
-        <div class="form-footer">
-            Need help? Contact 8239239550
-        </div>
+        <div style="margin-top: 15px;text-align: center;" >
+               <a href ="./upload.php" ><button type="" name="" class="btn btn-primary btn-md">Upload Excel</button></a>
+           </div>
+       <div class="form-footer">
+        Need help? Contact 8239239550
+    </div>
     </div>
 
     <script>
@@ -278,7 +280,7 @@ $conn = new mysqli("localhost", "root", "", "test");
                 year
             });
             
-            alert(Searching for payslip: Employee ${employee}, ${month}/${year});
+            // alert(Searching for payslip: Employee ${employee}, ${month}/${year});
         });
     </script>
 </body>

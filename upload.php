@@ -118,6 +118,9 @@ else{ ?>
                     <button type="submit" name="submit" class="btn btn-upload btn-lg">Upload CSV</button>
                 </div>
             </form>
+            <div style="margin-top: 15px;text-align: center;" >
+                <a href ="./index.php" ><button type="" name="" class="btn btn-primary btn-md">View Payslip</button></a>
+            </div>
         </div>
     </div>
 
