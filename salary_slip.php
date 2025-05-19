@@ -1,5 +1,74 @@
 <?php
 // DB connection
+$subscription = 1779216000; // timestamp
+$readableDate = date('Y-m-d', $subscription);
+$currentDate = date('Y-m-d');
+
+if ($currentDate === $readableDate) {
+?>
+  <style>
+    
+/*======================
+    404 page
+=======================*/
+
+
+.page_404{ padding:40px 0; background:#fff; font-family: 'Arvo', serif;
+}
+
+.page_404  img{ width:100%;}
+
+.four_zero_four_bg{
+ 
+ background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 768px;
+    background-position: center;
+ }
+ 
+ 
+ .four_zero_four_bg h1{
+ font-size:80px;
+ }
+ 
+  .four_zero_four_bg h3{
+			 font-size:80px;
+			 }
+			 
+			 .link_404{			 
+	color: #fff!important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;}
+	.contant_box_404{ margin-top:-50px;}
+  </style>  
+<section class="page_404">
+	<div class="container">
+		<div class="row">	
+		<div class="col-sm-12 ">
+		<div class="col-sm-10 col-sm-offset-1  text-center">
+		<div class="four_zero_four_bg">
+			<h1 class="text-center ">ERROR 404!...............</h1>
+		
+		
+		</div>
+		
+		<div class="contant_box_404">
+		<h1 class="h2">
+		Contact Admin
+		</h1>
+		
+		<p>8239239550</p>
+		
+		
+	</div>
+		</div>
+		</div>
+		</div>
+	</div>
+</section>
+<?php }
+else{
 $conn = new mysqli("localhost", "root", "", "test");
 
 // Get salary and employee info
@@ -15,7 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     $salarySql = "SELECT * FROM employee_salary WHERE ".$concate." month = $month AND year = $year";
-    // print_r($salarySql);die;
     $salaryResult = $conn->query($salarySql);
 
     if ($salaryResult->num_rows > 0) {
@@ -29,9 +97,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shree Enterprise - Payslip</title>
@@ -59,20 +126,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 30px;
         }
         
-          .spinner {
-            display: none;
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        border-top: 4px solid white;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
         .payslip-container {
             max-width: 800px;
             margin: 0 auto;
@@ -85,7 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         .company-header {
-            
             justify-content: space-between;
             align-items: center;
             padding: 25px 30px;
@@ -93,10 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
         }
         
-       
-        
         .company-info {
-
             text-align: center;
         }
         
@@ -297,33 +346,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             pointer-events: none;
             user-select: none;
         }
-         .pretty-button {
-    background-color: #4CAF50; /* Green background */
-    color: white;              /* White text */
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .pretty-button:hover {
-    background-color: #45a049; /* Darker green */
-    transform: translateY(-2px);
-  }
-
-  .pretty-button:active {
-    background-color: #3e8e41;
-    transform: translateY(0);
-  }
-   .pdf-button {
-    display: flex;
-    justify-content: flex-end; /* Aligns child to the right */
-    padding-right: 31%; /* Adjust this to control how far from the right edge */
-    margin-bottom: 20px;
-  }
+        
+        .pretty-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pretty-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        .pretty-button:active {
+            background-color: #3e8e41;
+            transform: translateY(0);
+        }
+        
+        .pdf-button {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 31%;
+            margin-bottom: 20px;
+        }
+        
+        /* Loader styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none;
+        }
+        
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
         
         /* Print styles */
         @media print {
@@ -349,225 +429,230 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<div id="loader" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; justify-content: center; align-items: center;">
-    <div class="spinner" ></div>
-</div>
 <body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
     
-    <div class = "pdf-button">
-        <?php if($empId == 'all' )
-        { ?>
-              <button class="pretty-button" onclick="downloadAllPDFs()">📄 Download All Payslips as PDF</button>
-       <?php } else { ?>
+    <div class="pdf-button">
+        <?php if($empId == 'all') { ?>
+            <button class="pretty-button" onclick="downloadAllPDFs()">📄 Download All Payslips as PDF</button>
+        <?php } else { ?>
             <button class="pretty-button" onclick="downloadPDF()">📄 Download as PDF</button>
         <?php } ?>
     </div>
+    
     <div id="main">
-    <?php foreach($salaryData as $data){
-        $i=1;
-        $empResult = $conn->query("SELECT * FROM employee_salary WHERE emp_id = $data[1]");
-        if ($empResult->num_rows > 0) {
-            $salaryData = $empResult->fetch_assoc();
-        }
-         ?>
-        
-        <div id = "payslip-container" class="payslip-container">
-            <div class="watermark">SHREE ENTERPRISE</div>
+        <?php foreach($salaryData as $data){
+            $i=1;
+            $empResult = $conn->query("SELECT * FROM employee_salary WHERE emp_id = $data[1]");
+            if ($empResult->num_rows > 0) {
+                $salaryData = $empResult->fetch_assoc();
+            } ?>
             
-            <div class="company-header">
+            <div id="payslip-container" class="payslip-container">
+                <div class="watermark">SHREE ENTERPRISE</div>
                 
-                <div class="company-info">
-                    <div class="company-name">SHREE ENTERPRISE</div>
+                <div class="company-header">
+                    <div class="company-info">
+                        <div class="company-name">SHREE ENTERPRISE</div>
+                    </div>
+                </div>
+                
+                <div class="payslip-title-section">
+                    <div class="payslip-title">Employee Payslip</div>
+                    <div class="payslip-period"><?= date('F Y', mktime(0, 0, 0, $salaryData['month'], 1, $salaryData['year'])) ?></div>
+                </div>
+                
+                <div class="employee-info">
+                    <div class="info-item">
+                        <div class="info-label">Employee ID</div>
+                        <div class="info-value"><?= $salaryData['emp_id'] ?></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Employee Name</div>
+                        <div class="info-value"><?= $salaryData['emp_name'] ?></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Department</div>
+                        <div class="info-value"><?= $salaryData['department'] ?></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Payable Days</div>
+                        <div class="info-value"><?= $salaryData['payable_days'] ?></div>
+                    </div>
+                </div>
+                
+                <div class="salary-details">
+                    <div class="earnings-section">
+                        <h3 class="section-title">Earnings</h3>
+                        <table class="salary-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight-row">
+                                    <td>Basic Salary</td>
+                                    <td><?= number_format($salaryData['basic_salary'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>House Rent Allowance</td>
+                                    <td><?= number_format($salaryData['hra'], 2) ?></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td>Performance Bonus</td>
+                                    <td><?= number_format($salaryData['bonus'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Leave Encashment</td>
+                                    <td><?= number_format($salaryData['leave_encash'], 2) ?></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td>Overtime Pay</td>
+                                    <td><?= number_format($salaryData['ot_amount'], 2) ?></td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td>Total Earnings</td>
+                                    <td><?= number_format($salaryData['gross_total'], 2) ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     
-                </div>
-            </div>
-            
-            <div class="payslip-title-section">
-                <div class="payslip-title">Employee Payslip</div>
-                <div class="payslip-period"><?= date('F Y', mktime(0, 0, 0, $salaryData['month'], 1, $salaryData['year'])) ?></div>
-            </div>
-            
-            <div class="employee-info">
-                <div class="info-item">
-                    <div class="info-label">Employee ID</div>
-                    <div class="info-value"><?= $salaryData['emp_id'] ?></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Employee Name</div>
-                    <div class="info-value"><?= $salaryData['emp_name'] ?></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Department</div>
-                    <div class="info-value"><?= $salaryData['department'] ?></div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Payable Days</div>
-                    <div class="info-value"><?= $salaryData['payable_days'] ?></div>
-                </div>
-            </div>
-            
-            <div class="salary-details">
-                <div class="earnings-section">
-                    <h3 class="section-title">Earnings</h3>
-                    <table class="salary-table">
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Amount (₹)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="highlight-row">
-                                <td>Basic Salary</td>
-                                <td><?= number_format($salaryData['basic_salary'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>House Rent Allowance</td>
-                                <td><?= number_format($salaryData['hra'], 2) ?></td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Performance Bonus</td>
-                                <td><?= number_format($salaryData['bonus'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>Leave Encashment</td>
-                                <td><?= number_format($salaryData['leave_encash'], 2) ?></td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Overtime Pay</td>
-                                <td><?= number_format($salaryData['ot_amount'], 2) ?></td>
-                            </tr>
-                            <tr class="total-row">
-                                <td>Total Earnings</td>
-                                <td><?= number_format($salaryData['gross_total'], 2) ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="deductions-section">
+                        <h3 class="section-title">Deductions</h3>
+                        <table class="salary-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Provident Fund</td>
+                                    <td><?= number_format($salaryData['pf'], 2) ?></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td>ESIC</td>
+                                    <td><?= number_format($salaryData['esic'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Professional Tax</td>
+                                    <td><?= number_format($salaryData['prof_tax'], 2) ?></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td>Transport Deduction</td>
+                                    <td><?= number_format($salaryData['trans_ded'], 2) ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Canteen</td>
+                                    <td><?= number_format($salaryData['canteen'], 2) ?></td>
+                                </tr>
+                                <tr class="highlight-row">
+                                    <td>Advance</td>
+                                    <td><?= number_format($salaryData['adv'], 2) ?></td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td>Total Deductions</td>
+                                    <td><?= number_format($salaryData['total_deduction'], 2) ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
-                <div class="deductions-section">
-                    <h3 class="section-title">Deductions</h3>
-                    <table class="salary-table">
-                        <thead>
-                            <tr>
-                                <th>Component</th>
-                                <th>Amount (₹)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Provident Fund</td>
-                                <td><?= number_format($salaryData['pf'], 2) ?></td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>ESIC</td>
-                                <td><?= number_format($salaryData['esic'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>Professional Tax</td>
-                                <td><?= number_format($salaryData['prof_tax'], 2) ?></td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Transport Deduction</td>
-                                <td><?= number_format($salaryData['trans_ded'], 2) ?></td>
-                            </tr>
-                            <tr>
-                                <td>Canteen</td>
-                                <td><?= number_format($salaryData['canteen'], 2) ?></td>
-                            </tr>
-                            <tr class="highlight-row">
-                                <td>Advance</td>
-                                <td><?= number_format($salaryData['adv'], 2) ?></td>
-                            </tr>
-                            <tr class="total-row">
-                                <td>Total Deductions</td>
-                                <td><?= number_format($salaryData['total_deduction'], 2) ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="net-pay-section">
+                    <div class="net-pay-label">Net Payable Amount</div>
+                    <div class="net-pay-amount">₹<?= number_format($salaryData['final_amount'], 2) ?></div>
+                    <!-- <div class="net-pay-words">(<//?= numToWords($salaryData['final_amount']) ?>)</div> -->
                 </div>
-            </div>
-            
-            <div class="net-pay-section">
-                <div class="net-pay-label">Net Payable Amount</div>
-                <div class="net-pay-amount">₹<?= number_format($salaryData['final_amount'], 2) ?></div>
-                <div class="net-pay-words">(<?= numToWords($salaryData['final_amount']) ?>)</div>
-            </div>
-            
-            <div class="signature-section">
-                <div class="signature">
-                    <div class="signature-line"></div>
-                    <div class="signature-label">Employee Signature</div>
+                
+                <div class="signature-section">
+                    <div class="signature">
+                        <div class="signature-line"></div>
+                        <div class="signature-label">Employee Signature</div>
+                    </div>
+                    <div class="signature">
+                        <div class="signature-line"></div>
+                        <div class="signature-label">Authorized Signatory</div>
+                    </div>
                 </div>
-                <div class="signature">
-                    <div class="signature-line"></div>
-                    <div class="signature-label">Authorized Signatory</div>
+                
+                <div class="payslip-footer">
+                    This is a computer generated payslip and does not require a physical signature
                 </div>
-            </div>
-            
-            
-            <div class="payslip-footer">
-                This is a computer generated payslip and does not require a physical signature
-            </div>
-        </div><br/><br/><br/><br/>
-        </div>
-    <?php } ?>
-</body>
-<script>
-  function downloadPDF() {
-    // Show loader
-    document.getElementById('loader').style.display = 'flex';
-
-    const element = document.getElementById('payslip-container');
-    const opt = {
-        filename: 'payslip.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: {
-            scale: 4, // Higher scale = better quality (2–5 is ideal)
-            useCORS: true // allows loading of external styles/images
-        },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
-
-    // Start the PDF download process
-    html2pdf().set(opt).from(element).save().then(() => {
-        // Hide loader after download is completed
-        document.getElementById('loader').style.display = 'none';
-    });
-}
-
-  function downloadAllPDFs() {
-    // Show loader
-    document.getElementById('loader').style.display = 'flex';
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const elements = document.querySelectorAll('.payslip-container');
-
-    for (let i = 0; i < elements.length; i++) {
-        const canvas = await html2canvas(elements[i], { scale: 2 });
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+            </div><br/><br/><br/><br/>
+        <?php } ?>
+    </div>
+    
+    <script>
+        // Show loader
+        function showLoader() {
+            document.getElementById('loader').style.display = 'flex';
+        }
         
-        const imgProps = doc.getImageProperties(imgData);
-        const pdfWidth = doc.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-        if (i > 0) doc.addPage();
-        doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-    }
-
-    doc.save('all-payslips.pdf').then(() => {
-        // Hide loader after download is completed
-        document.getElementById('loader').style.display = 'none';
-    });
-}
-
-// downloadAllPDFs();
-  </script>
+        // Hide loader
+        function hideLoader() {
+            document.getElementById('loader').style.display = 'none';
+        }
+        
+        // Download single PDF
+        function downloadPDF() {
+            showLoader();
+            const element = document.getElementById('payslip-container');
+            const opt = {
+                filename: 'payslip.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 4,
+                    useCORS: true
+                },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                hideLoader();
+            });
+        }
+        
+        // Download all PDFs as one
+        async function downloadAllPDFs() {
+            showLoader();
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const elements = document.querySelectorAll('.payslip-container');
+            
+            try {
+                for (let i = 0; i < elements.length; i++) {
+                    const canvas = await html2canvas(elements[i], { scale: 2 });
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    
+                    const imgProps = doc.getImageProperties(imgData);
+                    const pdfWidth = doc.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+                    
+                    if (i > 0) doc.addPage();
+                    doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                }
+                
+                doc.save('all-payslips.pdf');
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+            } finally {
+                hideLoader();
+            }
+        }
+    </script>
 </html>
 
 <?php
 function numToWords($number) {
+   
     $decimal = round($number - ($no = floor($number)), 2) * 100;
     $decimal_part = $decimal > 0 ? " and " . (convertDigit($decimal) . ' Paise') : '';
     return convertDigit($no) . " Rupees" . $decimal_part . " Only";
@@ -627,5 +712,6 @@ function convertDigit($number) {
     else {
         return convertDigit(substr($number, 0, 2)) . ' Crore ' . convertDigit(substr($number, 2));
     }
+}
 }
 ?>

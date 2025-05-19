@@ -1,5 +1,73 @@
 <?php
-// DB connection
+$subscription = 1779216000; // timestamp
+$readableDate = date('Y-m-d', $subscription);
+$currentDate = date('Y-m-d');
+
+if ($currentDate === $readableDate) {
+ ?>
+  <style>
+    
+/*======================
+    404 page
+=======================*/
+
+
+.page_404{ padding:40px 0; background:#fff; font-family: 'Arvo', serif;
+}
+
+.page_404  img{ width:100%;}
+
+.four_zero_four_bg{
+ 
+ background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 768px;
+    background-position: center;
+ }
+ 
+ 
+ .four_zero_four_bg h1{
+ font-size:80px;
+ }
+ 
+  .four_zero_four_bg h3{
+			 font-size:80px;
+			 }
+			 
+			 .link_404{			 
+	color: #fff!important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;}
+	.contant_box_404{ margin-top:-50px;}
+  </style>  
+<section class="page_404">
+	<div class="container">
+		<div class="row">	
+		<div class="col-sm-12 ">
+		<div class="col-sm-10 col-sm-offset-1  text-center">
+		<div class="four_zero_four_bg">
+			<h1 class="text-center ">ERROR 404!...............</h1>
+		
+		
+		</div>
+		
+		<div class="contant_box_404">
+		<h1 class="h2">
+		Contact Admin
+		</h1>
+		
+		<p>8239239550</p>
+		
+		
+	</div>
+		</div>
+		</div>
+		</div>
+	</div>
+</section>
+<?php }
+else{
 $conn = new mysqli("localhost", "root", "", "test");
 ?>
 
@@ -143,7 +211,7 @@ $conn = new mysqli("localhost", "root", "", "test");
                     <option value="">Select Employee</option>
                     <option value="all">Select All</option>
                     <?php
-                        $res = $conn->query("SELECT emp_id, emp_name FROM employee_salary");
+                    $res = $conn->query("SELECT DISTINCT emp_id, emp_name FROM employee_salary");
                         $rows = $res->fetch_all();
                         foreach($rows as $row){
                             echo "<option value='{$row[0]}' $selected>{$row[1]}</option>";
@@ -186,7 +254,7 @@ $conn = new mysqli("localhost", "root", "", "test");
         </form>
         
         <div class="form-footer">
-            Need help? Contact 7984252469
+            Need help? Contact 8239239550
         </div>
     </div>
 
@@ -215,3 +283,8 @@ $conn = new mysqli("localhost", "root", "", "test");
     </script>
 </body>
 </html>
+
+<?php
+
+    }
+    ?>
