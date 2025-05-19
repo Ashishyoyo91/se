@@ -11,9 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($empId == "all"){ 
         $concate = '';
     }else{
-        $concate = 'emp_id = $empId AND'; 
+        $concate = "emp_id = $empId AND "; 
     }
+    
     $salarySql = "SELECT * FROM employee_salary WHERE ".$concate." month = $month AND year = $year";
+    // print_r($salarySql);die;
     $salaryResult = $conn->query($salarySql);
 
     if ($salaryResult->num_rows > 0) {
@@ -26,6 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,6 +59,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 30px;
         }
         
+          .spinner {
+            display: none;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
         .payslip-container {
             max-width: 800px;
             margin: 0 auto;
@@ -66,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         .company-header {
-            display: flex;
+            
             justify-content: space-between;
             align-items: center;
             padding: 25px 30px;
@@ -74,18 +93,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
         }
         
-        .company-logo {
-            max-width: 120px;
-            height: auto;
-        }
+       
         
         .company-info {
-            text-align: right;
+
+            text-align: center;
         }
         
         .company-name {
             font-family: 'Playfair Display', serif;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 600;
             margin-bottom: 5px;
             letter-spacing: 0.5px;
@@ -105,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         .payslip-title {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 5px;
@@ -114,15 +131,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         .payslip-period {
-            font-size: 14px;
+            font-size: 10px;
             color: var(--secondary);
         }
         
         .employee-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 25px 30px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 15px;
+            text-align: center;
+            padding: 20px 30px;
             background-color: var(--light);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
@@ -132,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         .info-label {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--secondary);
@@ -149,8 +167,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .salary-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            padding: 30px;
+            gap: 23px;
+            padding: 23px;
         }
         
         @media (max-width: 768px) {
@@ -174,7 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .salary-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 12px;
         }
         
         .salary-table th {
@@ -268,17 +286,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         .watermark {
             position: absolute;
-            opacity: 0.05;
-            font-size: 120px;
+            opacity: 0.04;
+            font-size: 108px;
             font-weight: bold;
             color: var(--primary);
             transform: rotate(-30deg);
             z-index: 0;
-            top: 30%;
+            top: 22%;
             left: 10%;
             pointer-events: none;
             user-select: none;
         }
+         .pretty-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;              /* White text */
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .pretty-button:hover {
+    background-color: #45a049; /* Darker green */
+    transform: translateY(-2px);
+  }
+
+  .pretty-button:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+  }
+   .pdf-button {
+    display: flex;
+    justify-content: flex-end; /* Aligns child to the right */
+    padding-right: 31%; /* Adjust this to control how far from the right edge */
+    margin-bottom: 20px;
+  }
         
         /* Print styles */
         @media print {
@@ -304,7 +349,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
+<div id="loader" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+    <div class="spinner" ></div>
+</div>
 <body>
+    
+    <div class = "pdf-button">
+        <?php if($empId == 'all' )
+        { ?>
+              <button class="pretty-button" onclick="downloadAllPDFs()">📄 Download All Payslips as PDF</button>
+       <?php } else { ?>
+            <button class="pretty-button" onclick="downloadPDF()">📄 Download as PDF</button>
+        <?php } ?>
+    </div>
+    <div id="main">
     <?php foreach($salaryData as $data){
         $i=1;
         $empResult = $conn->query("SELECT * FROM employee_salary WHERE emp_id = $data[1]");
@@ -312,15 +370,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $salaryData = $empResult->fetch_assoc();
         }
          ?>
-        <button onclick="downloadPDF()">Download as PDF</button>
-        <div class="payslip-container">
+        
+        <div id = "payslip-container" class="payslip-container">
             <div class="watermark">SHREE ENTERPRISE</div>
             
             <div class="company-header">
-                <img src="company-logo.png" alt="Company Logo" class="company-logo">
+                
                 <div class="company-info">
                     <div class="company-name">SHREE ENTERPRISE</div>
-                    <div class="company-address">123 Business Avenue, Financial District, 100001</div>
+                    
                 </div>
             </div>
             
@@ -447,17 +505,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             
+            
             <div class="payslip-footer">
                 This is a computer generated payslip and does not require a physical signature
             </div>
         </div><br/><br/><br/><br/>
+        </div>
     <?php } ?>
 </body>
 <script>
-    function downloadPDF() {
-      const element = document.getElementById('content');
-      html2pdf().from(element).save();
+  function downloadPDF() {
+    // Show loader
+    document.getElementById('loader').style.display = 'flex';
+
+    const element = document.getElementById('payslip-container');
+    const opt = {
+        filename: 'payslip.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: {
+            scale: 4, // Higher scale = better quality (2–5 is ideal)
+            useCORS: true // allows loading of external styles/images
+        },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Start the PDF download process
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Hide loader after download is completed
+        document.getElementById('loader').style.display = 'none';
+    });
+}
+
+  function downloadAllPDFs() {
+    // Show loader
+    document.getElementById('loader').style.display = 'flex';
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const elements = document.querySelectorAll('.payslip-container');
+
+    for (let i = 0; i < elements.length; i++) {
+        const canvas = await html2canvas(elements[i], { scale: 2 });
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        const imgProps = doc.getImageProperties(imgData);
+        const pdfWidth = doc.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        if (i > 0) doc.addPage();
+        doc.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
     }
+
+    doc.save('all-payslips.pdf').then(() => {
+        // Hide loader after download is completed
+        document.getElementById('loader').style.display = 'none';
+    });
+}
+
+// downloadAllPDFs();
   </script>
 </html>
 
